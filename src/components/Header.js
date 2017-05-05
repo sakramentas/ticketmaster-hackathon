@@ -19,7 +19,8 @@ class Header extends React.Component {
         position: 'fixed',
         top: 0,
         overflow: 'hidden',
-        maxHeight: 57
+        maxHeight: 57,
+        background: '#333435'
       },
       menuButton: {
         marginLeft: 10
