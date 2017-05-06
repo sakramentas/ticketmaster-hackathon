@@ -25,6 +25,7 @@ class EventList extends Component {
 
     return (
       <div style={styles}>
+        <h2 style={{color: '#FFF', textAlign: 'center', fontSize: '20px'}}>Events in {this.props.cityName.toUpperCase()}</h2>
         {(this.props.events.length > 0) &&
         <div>
           {this.props.events.map((event, index) => {

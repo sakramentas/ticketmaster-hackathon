@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import {Route, IndexRoute} from 'react-router';
 import App from './containers/App';
 import NotFoundPage from './containers/NotFoundPage.js';
 import LoginPage from './containers/LoginPage';
@@ -15,7 +15,9 @@ export default (
     <Route path="/" component={App}>
       <IndexRoute component={EventDiscover}/>
       <Route path="dashboard" component={Dashboard}/>
-      <Route path="event" component={Event}/>
+      <Route path="events" component={Dashboard}>
+        <Route path=":id" component={LoginPage}/>
+      </Route>
       <Route path="form" component={FormPage}/>
       <Route path="table" component={TablePage}/>
       <Route path="*" component={NotFoundPage}/>

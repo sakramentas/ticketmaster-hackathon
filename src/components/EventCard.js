@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 import {Card, CardText, CardMedia, CardTitle} from 'material-ui/Card';
 
 
@@ -20,14 +21,19 @@ class EventCard extends Component {
       }
     };
 
-    let {name, images, _embedded} = this.props.event;
+    let {name, images, _embedded, dates, id} = this.props.event;
+    console.log('datessssss', dates)
+    let fixedDate = new Date(dates.start.localDate).getDate()
     return (
       <div>
         <Card style={styles.card}>
           {/*<CardText>{name}</CardText>*/}
-          <CardMedia overlay={<CardTitle title={name} subtitle={_embedded.venues[0].name}/>}>
-            <img src={images[1].url} style={styles.image} />
-          </CardMedia>
+          <Link to={{pathname: '/events', query: {id: `${id}`}}}>
+            <CardMedia
+              overlay={<CardTitle title={name} subtitle={<div>{_embedded.venues[0].name} <p>{fixedDate}</p></div>}/>}>
+              <img src={images[1].url} style={styles.image}/>
+            </CardMedia>
+          </Link>
         </Card>
       </div>
     );

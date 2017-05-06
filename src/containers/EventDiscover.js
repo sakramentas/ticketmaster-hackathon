@@ -16,19 +16,24 @@ class EventDiscover extends Component {
         lat: 0,
         lng: 0
       },
-      venueLocation: []
+      venueLocation: [],
+      cityName: 'dublin'
     };
+    this.handleSearch = this.handleSearch.bind(this)
   }
 
   componentWillMount() {
-    axios.get('https://app.ticketmaster.com/discovery/v2/events.json?countryCode=IE&apikey=TLAdwV0eyURqxMPWSG8lnw9IvLH37GEZ')
+    this.fetchData();
+    this.getUserLocation();
+  }
+
+  fetchData() {
+    axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?city=${this.state.cityName}&apikey=TLAdwV0eyURqxMPWSG8lnw9IvLH37GEZ`)
       .then(response => {
         console.log(response.data._embedded.events)
         this.setState({events: response.data._embedded.events})
       })
       .catch(error => console.error(error))
-
-    this.getUserLocation();
   }
 
   getUserLocation() {
@@ -44,26 +49,24 @@ class EventDiscover extends Component {
     });
   }
 
-  getVenueLocation() {
-    // let venueLoc = _.map(this.state.events._embedded.venues[0].location, 'id');
-    console.log('venussss2', this.state.events)
-    // let venues = this.state.events.map(event => event._embedded.venues[0].location)
-    // console.log('venussss', venues)
-    // this.setState({venueLocation: venues})
+  handleSearch(val) {
+    console.log('olha o val', val)
+    this.setState({cityName: val})
+    this.fetchData()
   }
 
   render() {
     return (
       <div>
         {/*{this.state.userLocation.lat > 1 && <Map containerElement={<div style={{height: `300px`}}/>}*/}
-                                                  {/*mapElement={<div style={{height: `300px`}}/>}*/}
-                                                  {/*venueLocation={this.state.venueLocation}*/}
-                                                  {/*{...this.state.userLocation} />*/}
+        {/*mapElement={<div style={{height: `300px`}}/>}*/}
+        {/*venueLocation={this.state.venueLocation}*/}
+        {/*{...this.state.userLocation} />*/}
         {/*}*/}
 
-        <Search />
+        <Search handleSearch={this.handleSearch}/>
 
-        <EventList events={this.state.events}/>
+        <EventList events={this.state.events} cityName={this.state.cityName} />
       </div>
     );
   }
