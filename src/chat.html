@@ -1,0 +1,159 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+body {
+  background: #000;
+}
+* {
+  box-sizing: border-box;
+}
+.container {
+  padding: 40px 20px;
+  margin: 0 auto;
+  max-width: 600px;
+  font-family: Helvetica;
+  font-size: 11px;
+}
+ 
+ 
+/** ios1-ios6 bubbles **/
+.bubble {
+  box-sizing: border-box;
+  float: left;
+  width: auto;
+  max-width: 80%;
+  position: relative;
+  clear: both;
+ 
+  background: #f0f0f0;
+ 
+  border: solid 0px rgba(0,0,0,0.5);
+  border-radius: 0.5em;
+ 
+  word-wrap: break-word;
+  margin-bottom: 1em;
+  padding: 0.5em;
+  font-size: 1.3em;
+}
+
+.bubble-alt {
+  
+}
+.bubble-alt:before {
+  left: auto;
+  right: -7px;
+}
+.bubble-alt:after {
+  left: auto;
+  right: -5px;
+}
+.textbox {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1em;
+  background: #282828;
+}
+.textbox input {
+  background: #434343;
+  border-radius: 5px;
+  border: 0px;
+  color: #ccc;
+  outline: none;
+  padding: 1em;
+  margin-right: 1em;
+  width: 80%;
+}
+.textbox button {
+  background: #1a9ddb;
+  color: #fff;
+  border-radius: 5px;
+  border: 0px;
+  padding: 1em;
+  float: right;
+}
+.yellow {
+  float: right;
+  color: #fff;
+  background: #1a9ddb;
+}
+p {
+  margin: 0;
+}
+
+  </style>
+</head>
+<body id="bodyt">
+
+	<div id = "container" class="container"> </div>
+
+  <div class="textbox">
+  <input id="inputMsg" type="text"><button>Send</button>
+  </div>
+
+
+
+
+
+
+
+
+
+	<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+	<script>
+		function sendMsg() {
+  var ref = firebase.database().ref("events/messages");
+  console.log('msg sent', msgCount + '');
+  var inputMsgBox = document.getElementById('inputMsg');
+  ref.child(msgCount + '').set('John: ' + inputMsgBox.value);
+  inputMsgBox.value = '';
+  displayMsgs();
+ 		}
+
+		(function () {
+			console.log('aueuhaehhuea')
+  // Initialize Firebase
+  var config = {
+  	apiKey: "AIzaSyCCW5INiHCStm7a9qQ7KveOc451Nj_gXpo",
+  	authDomain: "ticketmaster-984ec.firebaseapp.com",
+  	databaseURL: "https://ticketmaster-984ec.firebaseio.com",
+  	projectId: "ticketmaster-984ec",
+  	storageBucket: "ticketmaster-984ec.appspot.com",
+  	messagingSenderId: "554744663215"
+  };
+  firebase.initializeApp(config);
+  // var defaultDatabase = firebase.database();
+  var ref = firebase.database().ref("events");
+  
+  ref.once("value")
+  .then(function(snapshot) {
+  	 var container = document.getElementById("container");
+      
+
+     var msgArr = snapshot.val();
+     for (var i = 1; i < msgArr.messages.length; i++) {
+
+       var div = document.createElement("div");  
+       if(msgArr.messages[i].startsWith("John")){
+       	div.setAttribute('class', 'bubble yellow');
+       }else{
+       	div.setAttribute('class', 'bubble');
+       }
+       
+
+       var p = document.createElement("p");
+       p.innerHTML = msgArr.messages[i];       
+       div.appendChild(p);
+
+       container.appendChild(div);
+     }
+
+
+  })
+  .catch(err => console.error(err));
+})()
+</script>
+</body>
+</html>

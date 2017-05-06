@@ -8,6 +8,14 @@ class EventCard extends Component {
     super(props)
   }
 
+  getTwitterName() {
+    let attractions = this.props.event._embedded.attractions;
+    let twitter = attractions[0];
+    if (Object.keys(twitter)) {
+      twitter = twitter.externalLinks
+    }
+  }
+
   render() {
     let styles = {
       card: {

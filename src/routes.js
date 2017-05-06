@@ -8,6 +8,7 @@ import TablePage from './containers/TablePage';
 import Dashboard from './containers/DashboardPage';
 import Event from './containers/EventPage';
 import EventDiscover from './containers/EventDiscover';
+import ChatPage from './containers/ChatPage';
 
 export default (
   <Route>
@@ -15,6 +16,7 @@ export default (
     <Route path="/" component={App}>
       <IndexRoute component={EventDiscover}/>
       <Route path="dashboard" component={Dashboard}/>
+      <Route path="chat" component={ChatPage}/>
       <Route path="events" component={Dashboard}>
         <Route path=":id" component={LoginPage}/>
       </Route>

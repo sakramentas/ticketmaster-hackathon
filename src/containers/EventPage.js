@@ -28,11 +28,11 @@ class EventPage extends Component {
         <Timeline
           dataSource={{
             sourceType: 'profile',
-            screenName: 'twitterdev'
+            screenName: 'justinbieber'
           }}
           options={{
-            username: 'TwitterDev',
-            height: '400'
+            username: 'justinbieber',
+            height: '600'
           }}
           onLoad={() => console.log('Timeline is loaded!')}
         />
