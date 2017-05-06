@@ -13,8 +13,7 @@ class EventCard extends Component {
         marginTop: '15px',
         borderRadius: '6px',
         overflow: 'hidden',
-        height: '250px',
-        margin: '0 10px'
+        height: 'auto',
       },
       image: {
         height: '110%'

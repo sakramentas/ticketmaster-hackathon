@@ -9,9 +9,7 @@ class EventList extends Component {
 
   render() {
     let styles = {
-      marginTop: '15px',
-      borderRadius: '6px',
-      overflow: 'hidden'
+      marginTop: '30px'
     };
 
     const settings = {
@@ -22,21 +20,22 @@ class EventList extends Component {
       centerMode: true,
       arrows: false,
       centerPadding: 7,
+      afterChange: () => console.log('test')
     };
 
     return (
-      <div>
+      <div style={styles}>
         {(this.props.events.length > 0) &&
-        <Slider {...settings}>
+        <div>
           {this.props.events.map((event, index) => {
             return (
               <div key={index}>
                 <EventCard event={event}
-                           />
+                />
               </div>
             )
           })}
-        </Slider>
+        </div>
         }
       </div>
     );

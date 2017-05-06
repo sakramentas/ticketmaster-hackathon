@@ -1,72 +1,64 @@
-import React from 'react'
 import {withGoogleMap, GoogleMap, Marker} from "react-google-maps";
 import fancyMapStyles from '../constants/fancyMapStyles.json'
 
-export const Map = withGoogleMap(props => {
+import React, { Component } from 'react';
 
-  var places = ['Dublin', 'Swords', 'Howth']
+class Map extends Component {
 
-  // For each place, get the icon, name and location.
-  // var bounds = new google.maps.LatLngBounds();
-  // places.forEach(function(place) {
-  //   if (!place.geometry) {
-  //     console.log("Returned place contains no geometry");
-  //     return;
-  //   }
-  //   var icon = {
-  //     url: place.icon,
-  //     size: new google.maps.Size(71, 71),
-  //     origin: new google.maps.Point(0, 0),
-  //     anchor: new google.maps.Point(17, 34),
-  //     scaledSize: new google.maps.Size(25, 25)
-  //   };
-  //
-  //   // Create a marker for each place.
-  //   markers.push(new google.maps.Marker({
-  //     map: map,
-  //     icon: icon,
-  //     title: place.name,
-  //     position: place.geometry.location
-  //   }));
-  //
-  //   if (place.geometry.viewport) {
-  //     // Only geocodes have viewport.
-  //     bounds.union(place.geometry.viewport);
-  //   } else {
-  //     bounds.extend(place.geometry.location);
-  //   }
-  // });
+  constructor(props) {
+    super(props)
+    console.log('this props ', this.props)
+    this.state = {
+      lat: this.props.venueLocation[0].latitude,
+      lng: this.props.venueLocation[0].longitude
+    }
+  }
+
+  MapView() {
+    console.log('loading map view')
+    return withGoogleMap(() => {
+      return (
+        <div>
+          {this.props.venueLocation.length &&
+          <GoogleMap
+            defaultZoom={14}
+            defaultCenter={{lat: parseFloat(this.state.lat), lng: parseFloat(this.state.lng)}}
+            defaultOptions={{styles: fancyMapStyles}}>
 
 
-  return (
-    <div>
-      {props.venueLocation.length &&
-      <GoogleMap
-        defaultZoom={14}
-        defaultCenter={{lat: parseFloat(props.venueLocation[0].latitude), lng: parseFloat(props.venueLocation[0].longitude)}}
-        defaultOptions={{styles: fancyMapStyles}}>
+            {this.props.venueLocation.map((venue, index) => {
+              {/*console.log('venue', typeof venue.latitude, venue.longitude, index)*/
+              }
+              if (venue) {
+                return (
+                  <Marker
+                    position={{lat: parseFloat(venue.latitude), lng: parseFloat(venue.longitude)}}
+                    key={index}
+                  />
+                )
+              }
+            })}
 
-
-        {props.venueLocation.map((venue, index) => {
-          {/*console.log('venue', typeof venue.latitude, venue.longitude, index)*/
+          </GoogleMap>
           }
-          if (venue) {
-            return (
-              <Marker
-                position={{lat: parseFloat(venue.latitude), lng: parseFloat(venue.longitude)}}
-                key={index}
-              />
-            )
-          }
-        })}
+        </div>
+      )
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        mapaa
+        {this.MapView()}
+      </div>
+    );
+  }
+}
+
+export default Map
 
 
-      </GoogleMap>
-      }
-    </div>
-  )
-
-})
 
 
 
